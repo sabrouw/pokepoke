@@ -1,0 +1,51 @@
+
+<!--saisie du nombre par l'utilisateur, 
+creation de la variable locale input qui stoke les valeur taper
+keyup.enter met en place la validation avec la touche entrée
+voir les pseudo evenement d'angular-->
+<input class="m2 s2 small"type="number"
+        #input 
+        (keyup.enter)="selectPokemon(input.value)">
+<!--le ? signifie au quel cas il ne serais pas dans la liste --> 
+<!--on met en place une directive structurelle (conditionnelle)
+la propriété a afficher -->
+        <p *ngIf="pokemonSelected">
+          Vous avez choisi le pokemon : {{ pokemonSelected?.name }}
+        </p>
+        <p *ngIf="!pokemonSelected">
+          Aucun pokemon n'a été trouvé
+        </p>
+
+
+  <!--boucle sur mon tableau dur avec ngfor
+  let -->
+  <div class="row">
+    <!--boucle sur les pokemon-->
+  <div class="col l4 m6 s12"*ngFor="let pokemon of pokemonList">
+    <!--appelle de la directive pokemonBorderCards-->
+    <div class="card  horizontal large" pokemonBorderCards>
+      <div class="card-image s1">
+        <img src="{{ pokemon.picture }} ">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>{{ pokemon.name }}</p>
+            <p> {{ pokemon.hp}}</p>
+              
+            <small><p>{{ pokemon.cp }}</p></small>
+                <p> <small>{{ pokemon.created |date:"dd/MM/yy" }}</small></p>
+                <span *ngFor="let type of pokemon.types" class="{{ type | pokemonTypeColor }}">{{type}}</span>
+                
+        </div>
+        <div class="card-action">
+          <small><a (click)="goToPokemon(pokemon)">Voir</a> </small>
+        </div>
+      </div>
+     
+    </div>
+    
+  </div>
+<!--directive routerLink-->  
+<a class="btn-floating bnt-large waves-effect waves-light  red z-depth-3"
+style="position:fixed; bottom: 25px; right: 25px"
+routerLink="/pokemon/add"> ➕ </a>
